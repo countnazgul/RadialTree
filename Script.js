@@ -47,9 +47,10 @@ function extension_Done(){
 	Qva.AddExtension('RadialTree', function(){
 		Qva.LoadCSS(template_path + "style.css");
 		var _this = this;
-		var text1 = _this.Layout.Text0.text.toString();
-		var checkbox1 = _this.Layout.Text1.text.toString();
-		var select = _this.Layout.Text2.text.toString();
+		var rotation = _this.Layout.Text0.text.toString();
+		var diameter = _this.Layout.Text1.text.toString();
+    var nodeDistance = _this.Layout.Text2.text.toString();
+//		var select = _this.Layout.Text2.text.toString();
 		var divName = _this.Layout.ObjectId.replace("\\", "_");
 		if(_this.Element.children.length == 0) {//if this div doesn't already exist, create a unique div with the divName
 			var ui = document.createElement("div");
@@ -108,10 +109,10 @@ function extension_Done(){
 		  return getChildren('-')[0];
 		}
 
-		var diameter = 460;
+		//var diameter = 360;
 
 		var tree = d3.layout.tree()
-		    .size([360, diameter / 2 - 50])
+		    .size([rotation, diameter / nodeDistance - 90])
 		    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
 		var diagonal = d3.svg.diagonal.radial()
@@ -122,7 +123,7 @@ function extension_Done(){
 		    .attr("width", diameter)
 		    .attr("height", diameter - 150)
 		  	.append("g")
-		    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+		    .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2 + ")");
 		var root = nodesJson;
 
 		  var nodes = tree.nodes(root),

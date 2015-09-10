@@ -7,37 +7,34 @@
 		</h3>
 		<div class="prop-grid_container accordion-shadow-enabler" style="overflow:auto;">
 			<div class="prop-grid_clear prop-grid_top-vertical-spacer-12px prop-grid_last"></div>
-			
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Dimension 1</div>
+
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Parent</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
 		<div class='prop-grid_span-7' avq='prop_dynamicDropdown:.Chart.Dimension.0.Field'></div>
 		<div class='prop-width-28px' propicontype='tool' avq='prop_dlgbuttonjqui:.Chart.Dimension.0:ExtensionDimDialog.qvpp'></div>
 	</div><br />
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Dimension 2</div>
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Name</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
 		<div class='prop-grid_span-7' avq='prop_dynamicDropdown:.Chart.Dimension.1.Field'></div>
 		<div class='prop-width-28px' propicontype='tool' avq='prop_dlgbuttonjqui:.Chart.Dimension.1:ExtensionDimDialog.qvpp'></div>
 	</div><br />
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Measure 1</div>
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Measure</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
 		<div class='prop-grid_span-7 prop-grid_last' style='width:94%;' avq='prop_editexpression:.Chart.Expression.0.0.Definition'></div>
 	</div><br />
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Text Box 1</div>
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Rotation</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
 		<div class='popup-grid_span-7 popup-grid_last' style='width:94%;' avq='prop_editexpression:.Chart.Text.0.Content'></div>
 	</div><br />
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Checkbox 1</div>
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Diameter</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
-		<div class='prop-grid_clear prop-grid_span-1' avq='prop_checkbox:.Chart.Text.1.Content'></div>
+		<div class='popup-grid_span-7 popup-grid_last' style='width:94%;' avq='prop_editexpression:.Chart.Text.1.Content'></div>
 	</div><br />
-	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>selectBox 1</div>
+	<div class='prop-grid_clear prop-grid_prepend-1 prop-grid_span-5' avq='prop_label'>Node distance</div>
 	<div class='prop-grid_span-10 prop-grid_last'>
-		<select style='width:94%;' avq='mySelect:.Chart.Text.2.Content'>
-			<option value='select1'>selectL1</option>
-			<option value='select2'>selectL2</option>
-			<option value='select3'>selectL3</option>
-		</select>
+		<div class='popup-grid_span-7 popup-grid_last' style='width:94%;' avq='prop_editexpression:.Chart.Text.2.Content'></div>
 	</div><br />
+	
 
 		</div>
 		<h3 class="prop-h3 accordion-shadow" avq="activeAccordionHeader:.:GenericPresentationFoldout.qvpp">
