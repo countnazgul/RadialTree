@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExtensionObject Label="RadialTree" Description="D3 Radial Tree" PageHeight="50000">
+   <Dimension Label="Dimension 1" Initial="Path" TargetName="Dimension Name" />
+   <Dimension Label="Dimension 2" Initial="Measure" TargetName="Dimension Name" />
+   <Measurement Label="Measure 1" Initial="Sum(Measure)"/>
+	<Text Label="Text Box 1" Type="text" Expression="TITLE"/>
+    <Text Label="Checkbox 1" Type="checkbox" Initial="" />
+    <Text Label="selectBox 1" Type="select" Select="select1,select2,select3" SelectLabel="selectL1,selectL2,selectL3" Expression="selectL3"/>
+    <Initiate Name="Chart.Title" value="Object Template" />
+	<Initiate Name="Caption.Text" Value="Object Template" />
+  </ExtensionObject>
