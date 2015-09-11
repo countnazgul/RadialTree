@@ -6,9 +6,7 @@
 	<Text Label="Rotation" Type="text" Expression="260"/>
     <Text Label="Diameter" Type="text" Expression="360" />
     <Text Label="Node distance" Type="text" Expression="1.1" />
-<!--    <Text Label="Checkbox 1" Type="checkbox" Initial="" />
-    <Text Label="selectBox 1" Type="select" Select="select1,select2,select3"
-        SelectLabel="selectL1,selectL2,selectL3" Expression="selectL3"/> -->
+    <Text Label="Show values" Type="checkbox" Initial="1" />
   <Initiate Name="Chart.Title" value="Object Template" />
 	<Initiate Name="Caption.Text" Value="Object Template" />
   </ExtensionObject>

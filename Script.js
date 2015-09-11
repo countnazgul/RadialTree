@@ -44,15 +44,27 @@ if (Qva.Mgr.mySelect == undefined) {
 }
 
 function extension_Done(){
+  //localStorage.setItem('key', 'test1') ;
+  //alert(localStorage.getItem('key'));
 	Qva.AddExtension('RadialTree', function(){
 		Qva.LoadCSS(template_path + "style.css");
 		var _this = this;
-		var rotation = _this.Layout.Text0.text.toString();
+
+    var rotation = _this.Layout.Text0.text.toString();
 		var diameter = _this.Layout.Text1.text.toString();
     var nodeDistance = _this.Layout.Text2.text.toString();
-//		var select = _this.Layout.Text2.text.toString();
+    var showValues = _this.Layout.Text3.text.toString();
+
+    if(showValues == '' || showValues == 0) {
+      showValues = false;
+    } else {
+      showValues = true;
+    }
+
+    console.log(showValues)
 		var divName = _this.Layout.ObjectId.replace("\\", "_");
-		if(_this.Element.children.length == 0) {//if this div doesn't already exist, create a unique div with the divName
+
+		if(_this.Element.children.length == 0) {
 			var ui = document.createElement("div");
 			ui.setAttribute("id", divName);
 			_this.Element.appendChild(ui);
@@ -86,7 +98,6 @@ function extension_Done(){
 	 }
 
 		var nodesJson = createJSON(nodesArray);
-
 		function createJSON(Data) {
 		  var happyData = Data.map(function(d) {
 		    return {
@@ -99,8 +110,12 @@ function extension_Done(){
 		  function getChildren(name) {
 		    return happyData.filter(function(d) { return d.parent === name; })
 		      .map(function(d) {
+              var values = '';
+              if( showValues == true ) {
+                values = ' (' + d.size + ')';
+              }
 		        return {
-		          name: d.name,
+		          name: d.name + '' + values,
 		          size: d.size,
 		          children: getChildren(d.name)
 		        };
@@ -123,7 +138,7 @@ function extension_Done(){
 		    .attr("width", diameter)
 		    .attr("height", diameter - 150)
 		  	.append("g")
-		    .attr("transform", "translate(" + diameter / 3 + "," + diameter / 2 + ")");
+		    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 		var root = nodesJson;
 
 		  var nodes = tree.nodes(root),
@@ -148,7 +163,7 @@ function extension_Done(){
 		      .attr("dy", ".31em")
 		      .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
 		      .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-		      .text(function(d) { return d.name; });
+		      .text(function(d) { return d.name /*+ ' (' + d.size + ')'*/; });
 
 		d3.select(self.frameElement).style("height", diameter - 150 + "px");
 	});
