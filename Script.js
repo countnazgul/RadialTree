@@ -1,6 +1,6 @@
 // RadialTree Qlikview Extension
 // Author: stefan.stoichev@gmail.com
-// Version: 0.5
+// Version: 0.5.1
 // Repo:https://github.com/countnazgul/RadialTree
 
 var _path = Qva.Remote + "?public=only&name=Extensions/RadialTree/";
@@ -177,7 +177,7 @@ function extension_Done(){
 		    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
 		    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
 		    .text(function(d) { return d.name; })
-			.on("click", function(d){alert('test')});
+			//.on("click", function(d){alert('test')});
 			
 		d3.select(self.frameElement).style("height", diameter - 150 + "px");		
 	});
