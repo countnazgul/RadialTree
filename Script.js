@@ -1,8 +1,13 @@
-var template_path = Qva.Remote + "?public=only&name=Extensions/RadialTree/";
+// RadialTree Qlikview Extension
+// Author: stefan.stoichev@gmail.com
+// Version: 0.5
+// Repo:https://github.com/countnazgul/RadialTree
+
+var _path = Qva.Remote + "?public=only&name=Extensions/RadialTree/";
 function extension_Init()
 {
-    Qva.LoadScript(template_path + "jquery.js", function() {
-    	Qva.LoadScript(template_path + "d3.min.js", extension_Done);
+    Qva.LoadScript(_path + "jquery.js", function() {
+    	Qva.LoadScript(_path + "d3.min.js", extension_Done);
     });
 }
 
@@ -33,7 +38,7 @@ if (Qva.Mgr.mySelect == undefined) {
         if (currentValue == null) currentValue = "";
         var optlen = element.options.length;
         element.disabled = mode != 'e';
-        //element.value = currentValue;
+
         for (var ix = 0; ix < optlen; ++ix) {
             if (element.options[ix].value === currentValue) {
                 element.selectedIndex = ix;
@@ -44,36 +49,38 @@ if (Qva.Mgr.mySelect == undefined) {
 }
 
 function extension_Done(){
-  //localStorage.setItem('key', 'test1') ;
-  //alert(localStorage.getItem('key'));
 	Qva.AddExtension('RadialTree', function(){
-		Qva.LoadCSS(template_path + "style.css");
 		var _this = this;
 
-    var rotation = _this.Layout.Text0.text.toString();
-		var diameter = _this.Layout.Text1.text.toString();
-    var nodeDistance = _this.Layout.Text2.text.toString();
-    var showValues = _this.Layout.Text3.text.toString();
-
-    if(showValues == '' || showValues == 0) {
-      showValues = false;
-    } else {
-      showValues = true;
-    }
-
-    console.log(showValues)
+		var rotation 			= _this.Layout.Text0.text.toString();
+		var diameter 			= _this.Layout.Text1.text.toString();
+		var nodeDistance 		= _this.Layout.Text2.text.toString();
+		var showValues 			= _this.Layout.Text3.text.toString();
+		var circleRadius 		= _this.Layout.Text4.text.toString();
+		var circleFill 			= _this.Layout.Text5.text.toString();
+		var circleStroke 		= _this.Layout.Text6.text.toString();
+		var circleStrokeWidth 	= _this.Layout.Text7.text.toString() + 'px';
+		var strokeColor 		= _this.Layout.Text8.text.toString();
+		var strokeWidth 		= _this.Layout.Text9.text.toString() + 'px';
+		var fontSize 			= _this.Layout.Text10.text.toString() + 'px';
+		var fontFamily 			= _this.Layout.Text11.text.toString();
+		
+		if(showValues == '' || showValues == 0) {
+		  showValues = false;
+		} else {
+		  showValues = true;
+		}
+    
 		var divName = _this.Layout.ObjectId.replace("\\", "_");
 
 		if(_this.Element.children.length == 0) {
 			var ui = document.createElement("div");
 			ui.setAttribute("id", divName);
 			_this.Element.appendChild(ui);
-			//$('#' + divName).css('border-width', '0');
-	    //$('#' + divName).css('border', '3px solid black');
 		} else {
 			$("#" + divName).empty();
 		}
-		//var html = "";
+		
 		var td = _this.Data;
 		var nodesArray = [];
 		var parents = [];
@@ -89,13 +96,13 @@ function extension_Done(){
 			parents.push(row[0].text)
 		}
 
-	 var uniqueParents = parents.filter(function(itm,i,a){
-	 	return i==a.indexOf(itm);
-	 });
+		var uniqueParents = parents.filter(function(itm,i,a){
+			return i==a.indexOf(itm);
+		});
 
-	 if( uniqueParents.length == 1 ) {
-		 nodesArray.push([{"name":uniqueParents[0]},{"parent":'-'},{"size":1}]);
-	 }
+		if( uniqueParents.length == 1 ) {
+			nodesArray.push([{"name":uniqueParents[0]},{"parent":'-'},{"size":1}]);
+		}
 
 		var nodesJson = createJSON(nodesArray);
 		function createJSON(Data) {
@@ -124,8 +131,6 @@ function extension_Done(){
 		  return getChildren('-')[0];
 		}
 
-		//var diameter = 360;
-
 		var tree = d3.layout.tree()
 		    .size([rotation, diameter / nodeDistance - 90])
 		    .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
@@ -134,40 +139,48 @@ function extension_Done(){
 		    .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
 		var svg = d3.select("#" + divName).append("svg")
-				//.attr("style", "outline: thin solid red;")
 		    .attr("width", diameter)
 		    .attr("height", diameter - 150)
 		  	.append("g")
 		    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+			
 		var root = nodesJson;
 
-		  var nodes = tree.nodes(root),
-		      links = tree.links(nodes);
+		var nodes = tree.nodes(root),
+		    links = tree.links(nodes);
 
-		  var link = svg.selectAll(".link")
-		      .data(links)
-		      .enter().append("path")
-		      .attr("class", "link")
-		      .attr("d", diagonal);
+		var link = svg.selectAll(".link")
+		    .data(links)
+		    .enter().append("path")
+		    .attr("d", diagonal)
+			.attr("fill", "none")
+			.attr("stroke", strokeColor)
+			.attr("stroke-width", strokeWidth);
+			  
 
-		  var node = svg.selectAll(".node")
-		      .data(nodes)
-		      .enter().append("g")
-		      .attr("class", "node")
-		      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+		var node = svg.selectAll(".node")
+		    .data(nodes)
+		    .enter().append("g")		      
+		    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+			.style("font-size", fontSize)
+			.style("font-family", fontFamily);
 
-		  node.append("circle")
-		      .attr("r", 4.5);
-
-		  node.append("text")
-		      .attr("dy", ".31em")
-		      .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-		      .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-		      .text(function(d) { return d.name /*+ ' (' + d.size + ')'*/; });
-
-		d3.select(self.frameElement).style("height", diameter - 150 + "px");
+		node.append("circle")
+		    .attr("r", circleRadius)
+			.attr("fill", circleFill)
+			.attr("stroke", circleStroke)
+			.attr("stroke-width", circleStrokeWidth)
+			//.on("click", function(d){alert('test')});
+			  
+		node.append("text")
+		    .attr("dy", ".31em")
+		    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+		    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+		    .text(function(d) { return d.name; })
+			.on("click", function(d){alert('test')});
+			
+		d3.select(self.frameElement).style("height", diameter - 150 + "px");		
 	});
 }
 
-//Initiate extension
 extension_Init();

@@ -3,10 +3,18 @@
    <Dimension Label="Parent" Initial="Path" TargetName="Dimension Name" />
    <Dimension Label="Name" Initial="Measure" TargetName="Dimension Name" />
    <Measurement Label="Measure" Initial="Sum(Measure)"/>
-	<Text Label="Rotation" Type="text" Expression="260"/>
-    <Text Label="Diameter" Type="text" Expression="360" />
+	<Text Label="Rotation" Type="text" Expression="360"/>
+    <Text Label="Diameter" Type="text" Expression="500" />
     <Text Label="Node distance" Type="text" Expression="1.1" />
     <Text Label="Show values" Type="checkbox" Initial="1" />
+	<Text Label="Circle radius" Type="text" Expression="4.5" />
+	<Text Label="Circle fill" Type="text" Expression="none" />
+	<Text Label="Circle stroke" Type="text" Expression="black" />
+	<Text Label="Circle stroke width" Type="text" Expression="0.5" />
+	<Text Label="Stroke color" Type="text" Expression="lightgray" />
+	<Text Label="Stroke width" Type="text" Expression="1.5" />
+	<Text Label="Font size" Type="text" Expression="10" />
+	<Text Label="Font family" Type="text" Expression="sans-serif" />
   <Initiate Name="Chart.Title" value="Object Template" />
 	<Initiate Name="Caption.Text" Value="Object Template" />
   </ExtensionObject>
