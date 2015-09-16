@@ -1,7 +1,8 @@
 // RadialTree Qlikview Extension
 // Author: stefan.stoichev@gmail.com
-// Version: 0.5.1
+// Version: 0.5.2
 // Repo:https://github.com/countnazgul/RadialTree
+// d3 example used: http://bl.ocks.org/mbostock/4063550
 
 var _path = Qva.Remote + "?public=only&name=Extensions/RadialTree/";
 function extension_Init()
@@ -64,13 +65,13 @@ function extension_Done(){
 		var strokeWidth 		= _this.Layout.Text9.text.toString() + 'px';
 		var fontSize 			= _this.Layout.Text10.text.toString() + 'px';
 		var fontFamily 			= _this.Layout.Text11.text.toString();
-		
+
 		if(showValues == '' || showValues == 0) {
 		  showValues = false;
 		} else {
 		  showValues = true;
 		}
-    
+
 		var divName = _this.Layout.ObjectId.replace("\\", "_");
 
 		if(_this.Element.children.length == 0) {
@@ -80,7 +81,7 @@ function extension_Done(){
 		} else {
 			$("#" + divName).empty();
 		}
-		
+
 		var td = _this.Data;
 		var nodesArray = [];
 		var parents = [];
@@ -143,7 +144,7 @@ function extension_Done(){
 		    .attr("height", diameter - 150)
 		  	.append("g")
 		    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-			
+
 		var root = nodesJson;
 
 		var nodes = tree.nodes(root),
@@ -156,11 +157,11 @@ function extension_Done(){
 			.attr("fill", "none")
 			.attr("stroke", strokeColor)
 			.attr("stroke-width", strokeWidth);
-			  
+
 
 		var node = svg.selectAll(".node")
 		    .data(nodes)
-		    .enter().append("g")		      
+		    .enter().append("g")
 		    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 			.style("font-size", fontSize)
 			.style("font-family", fontFamily);
@@ -171,15 +172,15 @@ function extension_Done(){
 			.attr("stroke", circleStroke)
 			.attr("stroke-width", circleStrokeWidth)
 			//.on("click", function(d){alert('test')});
-			  
+
 		node.append("text")
 		    .attr("dy", ".31em")
 		    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
 		    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
 		    .text(function(d) { return d.name; })
 			//.on("click", function(d){alert('test')});
-			
-		d3.select(self.frameElement).style("height", diameter - 150 + "px");		
+
+		d3.select(self.frameElement).style("height", diameter - 150 + "px");
 	});
 }
 
