@@ -5,6 +5,8 @@ The extension is based on [Radial Reingold–Tilford Tree](http://bl.ocks.org/mb
 ***The click event is bound to the text (not to the circle). When the text is clicked it will select multiple values in the "parent" field!***
 
 ### Options
+
+[![Join the chat at https://gitter.im/countnazgul/RadialTree](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/countnazgul/RadialTree?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 * parent - field containing parent text
 * name - actual text field
 * measure
