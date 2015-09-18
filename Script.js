@@ -1,6 +1,6 @@
 // RadialTree Qlikview Extension
 // Author: stefan.stoichev@gmail.com
-// Version: 0.6
+// Version: 0.6.1
 // Repo:https://github.com/countnazgul/RadialTree
 // d3 example used: http://bl.ocks.org/mbostock/4063550
 
@@ -52,8 +52,8 @@ if (Qva.Mgr.mySelect == undefined) {
 
 function extension_Done(){
 	Qva.AddExtension('RadialTree', function(){
-		var _this = this;
-
+		var _this 				= this;
+	
 		var rotation 			= _this.Layout.Text0.text.toString();
 		var diameter 			= _this.Layout.Text1.text.toString();
 		var nodeDistance 		= _this.Layout.Text2.text.toString();
@@ -107,14 +107,14 @@ function extension_Done(){
 		if( uniqueParents.length == 0 ) {
 			nodesArray.push([{"name":uniqueParents[0]},{"parent":'-'},{"size":1}]);
 		} else {
-      if( selectedNode ) {
-        for( var i = 0; i < uniqueParents.length; i++) {
-          if( uniqueParents[i] == selectedNode) {
-            nodesArray.push([{"name":uniqueParents[i]},{"parent":'-'},{"size":1}]);
-          }
-        }
-      }
-    }
+			if( selectedNode ) {
+				for( var i = 0; i < uniqueParents.length; i++) {
+					if( uniqueParents[i] == selectedNode) {
+						nodesArray.push([{"name":uniqueParents[i]},{"parent":'-'},{"size":1}]);
+					}
+				}
+			}
+		}
 
 		var nodesJson = createJSON(nodesArray);
 
@@ -144,32 +144,31 @@ function extension_Done(){
 		  return getChildren('-')[0];
 		}
 
-    var selectedNodes = [];
-    function traverse1(o ) {
-        for (i in o) {
-            if (typeof(o[i])=="object") {
-              if (o[i].name) {
-                selectedNodes.push((o[i].name));
-              }
+		var selectedNodes = [];
+		function traverse(o ) {
+			for (i in o) {
+				if (typeof(o[i])=="object") {
+				  if (o[i].name) {
+					selectedNodes.push((o[i].name));
+				  }
 
-              traverse1(o[i]);
-            }
-        }
-    }
+				  traverse(o[i]);
+				}
+			}
+		}
 
-    function removeProp(obj, propName) {
-      for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          if (p == propName) {
-            delete obj[p];
-          } else if (typeof obj[p] == 'object') {
-            removeProp(obj[p], propName);
-          }
-        }
-      }
-      return obj;
-    }
-
+		function removeProp(obj, propName) {
+		  for (var p in obj) {
+			if (obj.hasOwnProperty(p)) {
+			  if (p == propName) {
+				delete obj[p];
+			  } else if (typeof obj[p] == 'object') {
+				removeProp(obj[p], propName);
+			  }
+			}
+		  }
+		  return obj;
+		}
 
 		var tree = d3.layout.tree()
 		    .size([rotation, diameter / nodeDistance - 90])
@@ -193,30 +192,30 @@ function extension_Done(){
 		    .data(links)
 		    .enter().append("path")
 		    .attr("d", diagonal)
-			  .attr("fill", "none")
-			  .attr("stroke", strokeColor)
-			  .attr("stroke-width", strokeWidth);
+			.attr("fill", "none")
+			.attr("stroke", strokeColor)
+			.attr("stroke-width", strokeWidth);
 
 
 		var node = svg.selectAll(".node")
 		    .data(nodes)
 		    .enter().append("g")
 		    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-			  .style("font-size", fontSize)
-			  .style("font-family", fontFamily);
+			.style("font-size", fontSize)
+			.style("font-family", fontFamily);
 
 		node.append("circle")
 		    .attr("r", circleRadius)
-			  .attr("fill", circleFill)
-			  .attr("stroke", circleStroke)
-			  .attr("stroke-width", circleStrokeWidth)
+			.attr("fill", circleFill)
+			.attr("stroke", circleStroke)
+			.attr("stroke-width", circleStrokeWidth)
 
 		node.append("text")
 		    .attr("dy", ".31em")
 		    .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
 		    .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
 		    .text(function(d) { return d.name; })
-			  .on("click", function(d){
+			.on("click", function(d){
                   selectedNode = d.name;
 
                   for(var i = 0; i < nodesJson.children.length; i++) {
@@ -224,14 +223,14 @@ function extension_Done(){
                       if(childs.name == d.name) {
                         selectedNodes = [];
                         removeProp(childs, 'parent')
-                        traverse1(childs)
+                        traverse(childs)
 
                         selectedNodes.push(childs.name)
                         var uniqueNodes = selectedNodes.filter(function(itm,i,a){
                     			return i==a.indexOf(itm);
                     		});
 
-                        _this.Data.SelectTextsInColumn(0, true, uniqueNodes);
+                        _this.Data.SelectTextsInColumn(0, false, uniqueNodes);
                       }
                   }
                 });
